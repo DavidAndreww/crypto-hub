@@ -1,0 +1,21 @@
+.coinLink {
+  text-decoration: none;
+  color: #333;
+  font-size: x-large;
+  margin-left: 10px;
+}
+.coinOverview {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 10px;
+  padding: 5px;
+  border: 3px solid rgb(196, 193, 193);
+}
+.coinOverview:hover {
+  outline: 1px solid #333;
+  cursor: pointer;
+}
+.coinOverview h4 {
+  margin-left: auto;
+}

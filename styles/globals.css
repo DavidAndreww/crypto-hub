@@ -15,31 +15,6 @@ a:hover {
   max-width: 950px;
   margin: 0 auto;
 }
-li {
-  list-style: none;
-  line-height: 30px;
-}
-.coin-link {
-  text-decoration: none;
-  color: #333;
-  font-size: x-large;
-  margin-left: 10px;
-}
-.coin-overview {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  margin-top: 10px;
-  padding: 5px;
-  border: 3px solid rgb(196, 193, 193);
-}
-.coin-overview:hover {
-  outline: 1px solid #333;
-  cursor: pointer;
-}
-.coin-overview h4 {
-  margin-left: auto;
-}
 nav {
   margin: 10px auto 80px;
   padding: 10px;

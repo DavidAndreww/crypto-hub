@@ -1,8 +1,38 @@
 import Link from 'next/link'
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
+// styles are imported into JSX elements from corresponding css module
+import styles from '../styles/Token-List.module.css'
 
-const fetchData = async () => {
+const coinList = ({ json }) => {
+
+  return (
+    <>
+      <Head>
+        <title>CryptoHub | Tokens</title> 
+      </Head>
+      {json.length === 0 ? (
+        <h3>loading...</h3>
+      ) : (
+        <>
+          {json.map(coin => (
+            <Link href={`tokens/${coin.name}`} key={coin.name}>
+              <div className={styles.coinOverview} >
+                <img src={coin.png32} />
+                <h2 className={styles.coinLink}>{coin.name}</h2>
+                <h4>Current rate: { new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(coin.rate) }</h4>
+              </div>
+            </Link>
+          ))}          
+        </>
+      )}
+    </>
+  )
+}
+
+export default coinList
+
+// get static props runs before page loads - json is returned as props to component
+export const getStaticProps = async () => {
   const response = await fetch('https://api.livecoinwatch.com/coins/list', {
     method: 'POST',
     headers: {
@@ -17,40 +47,10 @@ const fetchData = async () => {
     })
   })
   const json = await response.json()
-  return json
+
+  return {
+    props: {
+      json
+    }
+  }
 }
-
-
-const coinList = () => {
-  const [coinList, setCoinList] = useState([])
-
-  useEffect(async () => {
-    const coins = await fetchData()
-    setCoinList(coins)
-  }, [])
-
-  return (
-    <>
-      <Head>
-        <title>CryptoHub | Tokens</title> 
-      </Head>
-      {coinList.length === 0 ? (
-        <h3>loading...</h3>
-      ) : (
-        <>
-          {coinList.map(coin => (
-            <Link href={`tokens/${coin.name}`} key={coin.name}>
-              <div className='coin-overview' >
-                <img src={coin.png32} />
-                <h2 className='coin-link'>{coin.name}</h2>
-                <h4>Current rate: { new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(coin.rate) }</h4>
-              </div>
-            </Link>
-          ))}          
-        </>
-      )}
-    </>
-  )
-}
-
-export default coinList
