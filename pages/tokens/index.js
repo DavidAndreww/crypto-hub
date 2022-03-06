@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import Head from 'next/head'
 // styles are imported into JSX elements from corresponding css module
-import styles from '../styles/Token-List.module.css'
+import styles from '../../styles/Tokens.module.css'
 
-const coinList = ({ json }) => {
+const Tokens = ({ json }) => {
 
   return (
     <>
@@ -15,7 +15,7 @@ const coinList = ({ json }) => {
       ) : (
         <>
           {json.map(coin => (
-            <Link href={`tokens/${coin.name}`} key={coin.name}>
+            <Link href={`tokens/${coin.code}`} key={coin.name}>
               <div className={styles.coinOverview} >
                 <img src={coin.png32} />
                 <h2 className={styles.coinLink}>{coin.name}</h2>
@@ -29,7 +29,7 @@ const coinList = ({ json }) => {
   )
 }
 
-export default coinList
+export default Tokens
 
 // get static props runs before page loads - json is returned as props to component
 export const getStaticProps = async () => {
@@ -46,6 +46,7 @@ export const getStaticProps = async () => {
       meta: true
     })
   })
+
   const json = await response.json()
 
   return {
@@ -54,3 +55,4 @@ export const getStaticProps = async () => {
     }
   }
 }
+
