@@ -1,4 +1,4 @@
-// the square brackets[.....] around the file name, tells next.js to use dynamic routing for this page
+import { getAllCoins, getSingleCoin, getSingleCoinHistory } from "../../api/coinRequests"
 
 const TokenDetails = ({ coinDetails, coinHx }) => {
   console.log('deets', coinDetails)
@@ -18,20 +18,7 @@ export default TokenDetails;
 
 // builds HTML page for each item returned (uses same API as in previous page)
 export const getStaticPaths = async () => {
-  const response = await fetch('https://api.livecoinwatch.com/coins/list', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': process.env.NEXT_PUBLIC_API_KEY
-    },
-    body: JSON.stringify({
-      currency: 'USD',
-      sort: 'rank',
-      order: 'ascending',
-      meta: true
-    })
-  })
-  const json = await response.json()
+ const json = await getAllCoins()
 
   // path for each of these values
   const paths = json.map(token => {
@@ -49,37 +36,8 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   const name = context.params.code
 
-  const detailsResponse = await fetch("https://api.livecoinwatch.com/coins/single", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
-    },
-    body: JSON.stringify({
-      currency: "USD",
-      code: name,
-      meta: true,
-    }),
-  });
-
-  const hxResponse = await fetch("https://api.livecoinwatch.com/coins/single/history", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
-    },
-    body: JSON.stringify({
-      currency: "USD",
-      code: name,
-      start: 1617035100000,
-      end: 1617035400000,
-      meta: true,
-    }),
-  });
-
-
-  const coinDetails = await detailsResponse.json()
-  const coinHx = await hxResponse.json()
+  const coinDetails = await getSingleCoin(name)
+  const coinHx = await getSingleCoinHistory(name)
 
   return {
     props: {

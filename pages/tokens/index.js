@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 // styles are imported into JSX elements from corresponding css module
 import styles from '../../styles/Tokens.module.css'
+import { getAllCoins } from '../../api/coinRequests'
 
 const getTotalSupply = (coin) => {
   return coin.maxSupply 
@@ -49,21 +50,7 @@ export default Tokens
 
 // get static props runs before page loads - json is returned as props to component
 export const getStaticProps = async () => {
-  const response = await fetch('https://api.livecoinwatch.com/coins/list', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': process.env.NEXT_PUBLIC_API_KEY
-    },
-    body: JSON.stringify({
-      currency: 'USD',
-      sort: 'rank',
-      order: 'ascending',
-      meta: true
-    })
-  })
-
-  const json = await response.json()
+  const json = await getAllCoins()
 
   return {
     props: {
