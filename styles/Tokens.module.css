@@ -5,9 +5,8 @@
   margin-left: 10px;
 }
 .coinOverview {
-  display: flex;
-  align-items: center;
-  justify-content: start;
+  display: grid;
+  grid-template-columns: 30% 20% 30% 20%;
   margin-top: 10px;
   padding: 5px;
   border: 3px solid rgb(196, 193, 193);
@@ -18,4 +17,12 @@
 }
 .coinOverview h4 {
   margin-left: auto;
+}
+.coinLogo {
+  display: flex;
+  align-items: center;
+}
+.coinLogo img {
+  height: 3rem;
+  width: 3rem;
 }

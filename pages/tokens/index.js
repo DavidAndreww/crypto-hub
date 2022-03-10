@@ -3,6 +3,12 @@ import Head from 'next/head'
 // styles are imported into JSX elements from corresponding css module
 import styles from '../../styles/Tokens.module.css'
 
+const getTotalSupply = (coin) => {
+  return coin.maxSupply 
+  ? (coin.maxSupply - coin.circulatingSupply).toLocaleString()
+  : (coin.totalSupply - coin.circulatingSupply).toLocaleString()
+}
+
 const Tokens = ({ json }) => {
 
   return (
@@ -17,9 +23,19 @@ const Tokens = ({ json }) => {
           {json.map(coin => (
             <Link href={`tokens/${coin.code}`} key={coin.name}>
               <div className={styles.coinOverview} >
-                <img src={coin.png32} />
-                <h2 className={styles.coinLink}>{coin.name}</h2>
-                <h4>Current rate: { new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(coin.rate) }</h4>
+                <div className={styles.coinLogo}>
+                  <img src={coin.png32} />
+                  <h2 className={styles.coinLink}>{coin.name}</h2>
+                </div>
+                <div>
+                  <h4>Rank {coin.rank}</h4>
+                </div>
+                <div>
+                  <h4>Supply Remaining: {getTotalSupply(coin)}</h4>
+                </div>
+                <div>
+                  <h4>Current rate: { new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(coin.rate) }</h4>
+                </div>
               </div>
             </Link>
           ))}          
@@ -37,7 +53,7 @@ export const getStaticProps = async () => {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
-      'x-api-key': '38be70ee-0c30-4d17-bdf1-90027079cb4f'
+      'x-api-key': process.env.NEXT_PUBLIC_API_KEY
     },
     body: JSON.stringify({
       currency: 'USD',

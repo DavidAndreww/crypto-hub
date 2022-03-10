@@ -3,12 +3,13 @@
 const TokenDetails = ({ coinDetails, coinHx }) => {
   console.log('deets', coinDetails)
   console.log('history', coinHx)
- 
+  
   return (
     <div className='coinDetails'>
       <img src={coinDetails.png32} />
       <h1>{coinDetails.name}</h1>
       <h4>ATH: {new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(coinDetails.allTimeHighUSD)}</h4>
+      <h4>Exchanges: {coinHx.exchanges}</h4>
     </div>
   )
 }
@@ -21,7 +22,7 @@ export const getStaticPaths = async () => {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
-      'x-api-key': '38be70ee-0c30-4d17-bdf1-90027079cb4f'
+      'x-api-key': process.env.NEXT_PUBLIC_API_KEY
     },
     body: JSON.stringify({
       currency: 'USD',
@@ -52,7 +53,7 @@ export const getStaticProps = async (context) => {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-api-key": '38be70ee-0c30-4d17-bdf1-90027079cb4f',
+      "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
     },
     body: JSON.stringify({
       currency: "USD",
@@ -65,7 +66,7 @@ export const getStaticProps = async (context) => {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-api-key": '38be70ee-0c30-4d17-bdf1-90027079cb4f',
+      "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
     },
     body: JSON.stringify({
       currency: "USD",
@@ -86,5 +87,4 @@ export const getStaticProps = async (context) => {
       coinHx
     }
   }
-
 }
