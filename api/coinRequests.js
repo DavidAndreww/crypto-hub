@@ -1,4 +1,4 @@
-export const getAllCoins = async() => {
+export const getAllCoins = async () => {
   const response = await fetch('https://api.livecoinwatch.com/coins/list', {
     method: 'POST',
     headers: {

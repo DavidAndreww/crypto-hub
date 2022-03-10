@@ -1,8 +1,30 @@
 import { getAllCoins, getSingleCoin, getSingleCoinHistory } from "../../api/coinRequests"
+import moment from "moment"
+import { parseTwoDigitYear } from "moment"
 
 const TokenDetails = ({ coinDetails, coinHx }) => {
-  console.log('deets', coinDetails)
-  console.log('history', coinHx)
+
+  const coinAge = (days) => {
+    let daysRemaining = days
+    let age = {
+      year: { value: 0, range: 365 },
+      month: { value: 0, range: 30 },
+      day: { value: 0, range: 1 }
+    }
+
+    for (let timeFrame in age) {
+      age[timeFrame]['value'] = Math.floor(daysRemaining / age[timeFrame]['range'])
+      daysRemaining = daysRemaining - (age[timeFrame]['range'] * age[timeFrame]['value'])
+      console.log([age[timeFrame]])
+    }
+    return `
+    ${age.year.value} 
+    ${age.year.value > 1 ? 'years' : 'year'} 
+    ${age.month.value} 
+    ${age.month.value > 1 ? 'months' : 'month'} 
+    ${age.day.value} 
+    ${age.day.value > 1 ? 'days' : 'day'}`
+  }
   
   return (
     <div className='coinDetails'>
@@ -10,6 +32,7 @@ const TokenDetails = ({ coinDetails, coinHx }) => {
       <h1>{coinDetails.name}</h1>
       <h4>ATH: {new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(coinDetails.allTimeHighUSD)}</h4>
       <h4>Exchanges: {coinHx.exchanges}</h4>
+      <h4>Age: {coinAge(coinDetails.age)}</h4>
     </div>
   )
 }
