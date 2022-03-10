@@ -3,6 +3,8 @@ import moment from "moment"
 import { parseTwoDigitYear } from "moment"
 
 const TokenDetails = ({ coinDetails, coinHx }) => {
+  // console.log(coinDetails)
+  // console.log(coinHx)
 
   const coinAge = (days) => {
     let daysRemaining = days
@@ -15,8 +17,8 @@ const TokenDetails = ({ coinDetails, coinHx }) => {
     for (let timeFrame in age) {
       age[timeFrame]['value'] = Math.floor(daysRemaining / age[timeFrame]['range'])
       daysRemaining = daysRemaining - (age[timeFrame]['range'] * age[timeFrame]['value'])
-      console.log([age[timeFrame]])
     }
+
     return `
     ${age.year.value} 
     ${age.year.value > 1 ? 'years' : 'year'} 

@@ -4,14 +4,15 @@ import Head from 'next/head'
 import styles from '../../styles/Tokens.module.css'
 import { getAllCoins } from '../../api/coinRequests'
 
-const getTotalSupply = (coin) => {
-  return coin.maxSupply 
-  ? (coin.maxSupply - coin.circulatingSupply).toLocaleString()
-  : (coin.totalSupply - coin.circulatingSupply).toLocaleString()
-}
 
 const Tokens = ({ json }) => {
-
+  
+  const getTotalSupply = (coin) => {
+    return coin.maxSupply 
+    ? (coin.maxSupply - coin.circulatingSupply).toLocaleString()
+    : (coin.totalSupply - coin.circulatingSupply).toLocaleString()
+  }
+  
   return (
     <>
       <Head>
